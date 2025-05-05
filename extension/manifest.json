@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Gmail Smart Sidebar",
+  "version": "1.0",
+  "description": "Summarizes emails and extracts calendar events from Gmail",
+  "action": {
+    "default_title": "Gmail Smart Sidebar"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["js/content.js"],
+      "css": ["css/sidebar.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "sidebar.html"],
+      "matches": ["*://mail.google.com/*"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://mail.google.com/*"
+  ]
+} 

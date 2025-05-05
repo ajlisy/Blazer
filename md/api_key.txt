@@ -1,0 +1,5 @@
+OpenAI API Key:
+YOUR_OPENAI_API_KEY_HERE
+
+# Note: Replace the placeholder above with your actual OpenAI API key to use the extension
+# The key should start with "sk-" followed by a long string of characters

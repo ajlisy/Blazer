@@ -1,0 +1,183 @@
+/* Gmail Smart Sidebar Styles */
+
+/* Main sidebar container */
+.smart-sidebar {
+  position: fixed;
+  right: 0;
+  top: 60px;
+  width: 300px;
+  height: calc(100vh - 60px);
+  background-color: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  color: #202124;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: auto;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+/* Alternative positioning for when Gmail changes its layout */
+.smart-sidebar.alternative {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+}
+
+/* Sidebar header */
+.sidebar-header {
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  background-color: #f9f9f9;
+  z-index: 1;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1a73e8;
+}
+
+/* Sidebar content */
+.sidebar-content {
+  padding: 16px;
+}
+
+/* Section styling */
+.section {
+  margin-bottom: 24px;
+}
+
+.section h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #5f6368;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sender and Subject sections */
+.sender-info, .subject-info {
+  font-weight: 500;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+
+/* Summary list */
+.summary-list {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.summary-list li {
+  margin-bottom: 8px;
+}
+
+/* Calendar events */
+.calendar-events {
+  margin-top: 8px;
+}
+
+.calendar-event {
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #f8f9fa;
+}
+
+.event-title {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.event-datetime {
+  color: #5f6368;
+  margin-bottom: 8px;
+}
+
+/* Calendar link button */
+.calendar-link {
+  display: inline-block;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.calendar-link:hover {
+  background-color: #1765cc;
+  text-decoration: none;
+  color: white;
+}
+
+/* Loading state */
+.sidebar-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.loading-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1a73e8;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error state */
+.sidebar-error {
+  color: #d93025;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #fce8e6;
+  margin-top: 16px;
+}
+
+/* Message state (default) */
+.sidebar-message {
+  padding: 32px 0;
+  text-align: center;
+  color: #5f6368;
+}
+
+/* Button styling */
+.sidebar-button {
+  display: inline-block;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-family: 'Google Sans', Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.sidebar-button:hover {
+  background-color: #1765cc;
+} 
