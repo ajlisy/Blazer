@@ -8,6 +8,7 @@ let sidebarContainer = null;
 let isProcessing = false;
 let insertionAttempts = 0;
 let debugMode = false; // Debug mode toggle
+let sidebarVisible = true; // Track sidebar visibility
 
 // Main initialization
 function initializeExtension() {
@@ -18,12 +19,42 @@ function initializeExtension() {
     createSidebarContainer();
   }
   
+  // Check initial sidebar visibility state from background script
+  chrome.runtime.sendMessage({ action: "getSidebarState" }, (response) => {
+    if (response && response.hasOwnProperty('visible')) {
+      sidebarVisible = response.visible;
+      updateSidebarVisibility();
+    }
+  });
+  
   // Set up email change detection
   setInterval(checkForEmailChange, REFRESH_INTERVAL);
   
   // Add debug info to console
   console.log("Gmail Smart Sidebar: URL at initialization:", window.location.href);
   logGmailStructure();
+  
+  // Listen for messages from background script
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "toggleSidebar") {
+      sidebarVisible = request.visible;
+      updateSidebarVisibility();
+      sendResponse({ success: true });
+    }
+  });
+}
+
+// Update sidebar visibility based on current state
+function updateSidebarVisibility() {
+  if (!sidebarContainer) return;
+  
+  if (sidebarVisible) {
+    sidebarContainer.style.display = "block";
+    console.log("Gmail Smart Sidebar: Sidebar shown");
+  } else {
+    sidebarContainer.style.display = "none";
+    console.log("Gmail Smart Sidebar: Sidebar hidden");
+  }
 }
 
 // Log Gmail structure for debugging purposes
@@ -56,6 +87,7 @@ function createSidebarContainer() {
       <h2>Smart Sidebar</h2>
       <div class="sidebar-controls">
         <a href="#" id="debug-toggle" title="Toggle Debug Mode" style="font-size: 10px; color: #777;">Debug: OFF</a>
+        <a href="#" id="close-sidebar" title="Hide Sidebar" style="font-size: 14px; color: #777; margin-left: 10px;">×</a>
       </div>
     </div>
     <div class="sidebar-content">
@@ -71,8 +103,12 @@ function createSidebarContainer() {
   // Also attempt insertion when DOM changes 
   setupMutationObserver();
   
-  // Add debug toggle event listener after insertion
+  // Set initial visibility
+  updateSidebarVisibility();
+  
+  // Add event listeners after insertion
   setTimeout(() => {
+    // Debug toggle
     const debugToggle = document.getElementById('debug-toggle');
     if (debugToggle) {
       debugToggle.addEventListener('click', (e) => {
@@ -87,6 +123,24 @@ function createSidebarContainer() {
         });
         
         console.log(`Gmail Smart Sidebar: Debug mode ${debugMode ? 'enabled' : 'disabled'}`);
+      });
+    }
+    
+    // Close button
+    const closeButton = document.getElementById('close-sidebar');
+    if (closeButton) {
+      closeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        sidebarVisible = false;
+        updateSidebarVisibility();
+        
+        // Sync state with background script
+        chrome.runtime.sendMessage({ 
+          action: "toggleSidebar", 
+          visible: false 
+        });
+        
+        console.log("Gmail Smart Sidebar: Sidebar hidden via close button");
       });
     }
   }, 1000);
@@ -376,6 +430,7 @@ function updateSidebarContent(options) {
         <h2>Smart Sidebar</h2>
         <div class="sidebar-controls">
           <a href="#" id="debug-toggle" title="Toggle Debug Mode" style="font-size: 10px; color: #777;">Debug: ${debugMode ? 'ON' : 'OFF'}</a>
+          <a href="#" id="close-sidebar" title="Hide Sidebar" style="font-size: 14px; color: #777; margin-left: 10px;">×</a>
         </div>
       </div>
       <div class="sidebar-content">
@@ -391,6 +446,7 @@ function updateSidebarContent(options) {
         <h2>Smart Sidebar</h2>
         <div class="sidebar-controls">
           <a href="#" id="debug-toggle" title="Toggle Debug Mode" style="font-size: 10px; color: #777;">Debug: ${debugMode ? 'ON' : 'OFF'}</a>
+          <a href="#" id="close-sidebar" title="Hide Sidebar" style="font-size: 14px; color: #777; margin-left: 10px;">×</a>
         </div>
       </div>
       <div class="sidebar-content">
@@ -456,6 +512,7 @@ function updateSidebarContent(options) {
         <h2>Smart Sidebar</h2>
         <div class="sidebar-controls">
           <a href="#" id="debug-toggle" title="Toggle Debug Mode" style="font-size: 10px; color: #777;">Debug: ${debugMode ? 'ON' : 'OFF'}</a>
+          <a href="#" id="close-sidebar" title="Hide Sidebar" style="font-size: 14px; color: #777; margin-left: 10px;">×</a>
         </div>
       </div>
       <div class="sidebar-content">
@@ -534,6 +591,24 @@ function updateSidebarContent(options) {
       });
       
       console.log(`Gmail Smart Sidebar: Debug mode ${debugMode ? 'enabled' : 'disabled'}`);
+    });
+  }
+  
+  // Reattach close button listener
+  const closeButton = document.getElementById('close-sidebar');
+  if (closeButton) {
+    closeButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      sidebarVisible = false;
+      updateSidebarVisibility();
+      
+      // Sync state with background script
+      chrome.runtime.sendMessage({ 
+        action: "toggleSidebar", 
+        visible: false 
+      });
+      
+      console.log("Gmail Smart Sidebar: Sidebar hidden via close button");
     });
   }
 }

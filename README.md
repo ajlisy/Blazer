@@ -9,6 +9,7 @@ A Chrome extension that adds an intelligent sidebar to Gmail that automatically 
 - **Calendar Event Extraction**: Identifies dates, times, and events mentioned in emails
 - **Google Calendar Integration**: One-click "Add to Calendar" links for each detected event
 - **Robust Error Handling**: Fallback options if API calls fail
+- **Toggle Visibility**: Hide or show sidebar with a click on the extension icon
 
 ## Installation
 
@@ -34,6 +35,12 @@ Before using the extension, you need to:
 3. The Smart Sidebar will appear on the right side of the screen
 4. View the automatically generated summary and any calendar events
 5. Click "Add to Calendar" to add events to Google Calendar
+
+### Controlling the Sidebar
+
+- **Toggle Visibility**: Click the extension icon in the Chrome toolbar to show/hide the sidebar
+- **Close Button**: Click the × in the top-right corner of the sidebar to hide it
+- **Debug Mode**: Click "Debug" in the sidebar header to see technical details about calendar event parsing
 
 ## Implementation Details
 

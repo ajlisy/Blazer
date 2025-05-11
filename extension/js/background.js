@@ -2,6 +2,32 @@
 const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"; // Replace with your actual API key
 const OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
+// Store sidebar visibility state
+let sidebarVisible = true;
+
+// Listen for extension icon clicks
+chrome.action.onClicked.addListener((tab) => {
+  if (tab.url.includes('mail.google.com')) {
+    // Toggle the sidebar visibility state
+    sidebarVisible = !sidebarVisible;
+    
+    // Update the icon to reflect current state
+    const iconPath = sidebarVisible 
+      ? "images/icon128.png" 
+      : "images/icon48.png"; // Using a different icon for off state
+      
+    chrome.action.setIcon({ path: iconPath, tabId: tab.id });
+    
+    // Send a message to the content script to toggle sidebar
+    chrome.tabs.sendMessage(tab.id, {
+      action: "toggleSidebar",
+      visible: sidebarVisible
+    }).catch(error => {
+      console.error("Error sending toggle message:", error);
+    });
+  }
+});
+
 // Listen for messages from content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "processEmail") {
@@ -25,6 +51,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
       });
     return true; // Required to use sendResponse asynchronously
+  } else if (request.action === "getSidebarState") {
+    // Respond with current sidebar visibility state
+    sendResponse({ visible: sidebarVisible });
+    return false;
   }
 });
 

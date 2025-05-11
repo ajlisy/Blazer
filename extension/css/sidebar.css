@@ -16,6 +16,7 @@
   overflow-y: auto;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
   z-index: 999;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 /* Alternative positioning for when Gmail changes its layout */
@@ -34,6 +35,9 @@
   top: 0;
   background-color: #f9f9f9;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .sidebar-header h2 {
@@ -41,6 +45,46 @@
   font-size: 16px;
   font-weight: 500;
   color: #1a73e8;
+}
+
+/* Sidebar controls */
+.sidebar-controls {
+  display: flex;
+  align-items: center;
+}
+
+/* Close button */
+#close-sidebar {
+  cursor: pointer;
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #f2f2f2;
+  color: #5f6368;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+#close-sidebar:hover {
+  background-color: #e0e0e0;
+  color: #202124;
+}
+
+/* Debug toggle */
+#debug-toggle {
+  font-size: 10px;
+  color: #777;
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+#debug-toggle:hover {
+  background-color: #f2f2f2;
 }
 
 /* Sidebar content */
@@ -178,6 +222,18 @@
   margin-top: 8px;
 }
 
+.sidebar-button-secondary {
+  background-color: #f8f9fa;
+  color: #1a73e8;
+  border: 1px solid #dadce0;
+  margin-left: 8px;
+}
+
 .sidebar-button:hover {
   background-color: #1765cc;
+}
+
+.sidebar-button-secondary:hover {
+  background-color: #f1f3f4;
+  border-color: #d2e3fc;
 } 
