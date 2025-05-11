@@ -11,6 +11,9 @@ node_modules/
 .env.test.local
 .env.production.local
 
+# Configuration with API keys
+extension/js/config.js
+
 # OS specific files
 .DS_Store
 Thumbs.db

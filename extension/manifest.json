@@ -14,11 +14,12 @@
     }
   ],
   "background": {
-    "service_worker": "js/background.js"
+    "service_worker": "js/background.js",
+    "type": "module"
   },
   "web_accessible_resources": [
     {
-      "resources": ["images/*", "sidebar.html"],
+      "resources": ["images/*", "sidebar.html", "js/config.js"],
       "matches": ["*://mail.google.com/*"]
     }
   ],

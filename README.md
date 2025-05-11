@@ -23,10 +23,22 @@ A Chrome extension that adds an intelligent sidebar to Gmail that automatically 
 Before using the extension, you need to:
 
 1. Get an OpenAI API key from [OpenAI's platform](https://platform.openai.com/api-keys)
-2. Replace the placeholder in `extension/js/background.js` with your actual API key:
-   ```js
-   const OPENAI_API_KEY = "YOUR_OPENAI_API_KEY"; // Replace with your actual API key
+2. Create a `config.js` file by copying the template:
    ```
+   cp extension/js/config.template.js extension/js/config.js
+   ```
+3. Edit `extension/js/config.js` to include your API key:
+   ```js
+   const CONFIG = {
+     openai: {
+       apiKey: "YOUR_OPENAI_API_KEY_HERE", // Replace with actual key
+       model: "gpt-4o"
+     },
+     // other settings...
+   };
+   ```
+
+The `config.js` file is included in `.gitignore` to prevent your API keys from being committed to the repository.
 
 ## Usage
 
@@ -57,6 +69,8 @@ The extension consists of:
 - `background.js`: Handles API calls to OpenAI
 - `content.js`: Manages sidebar UI and email detection
 - `sidebar.css`: Styling for the sidebar
+- `config.template.js`: Template for configuration (safe to commit)
+- `config.js`: Local configuration with API keys (gitignored)
 
 ## Known Issues
 
